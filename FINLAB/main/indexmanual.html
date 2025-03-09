@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif - FINLAB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex justify-center items-center relative">
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+    
+    <!-- Sidebar Menu -->
+    <div class="fixed top-5 left-5 z-50">
+        <button id="menu-btn" class="text-3xl text-navy-700">☰</button>
+        <div id="sidebar" class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform -translate-x-full transition-transform p-5 z-50">
+            <button id="close-menu" class="text-2xl mb-4">❌</button>
+            <a href="index.html" class="block text-lg text-slate-800 font-semibold items-center hover:bg-slate-200 p-2 rounded"><span class="mr-2">↩️</span>Keluar dari Kuis</a>
+        </div>
+    </div>
+    
+    <div id="main-content" class="bg-white shadow-xl rounded-lg p-8 max-w-4xl w-full border border-gray-300 relative z-10">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <div class="relative group w-full max-w-sm">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Finance" class="mx-auto mb-4 rounded-lg shadow-md transition duration-300 group-hover:blur-md">
+                
+                <!-- Overlay muncul saat hover -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button class="bg-white rounded-full p-4 shadow-lg transition duration-300 hover:bg-red-500">
+                        <span class="text-black text-3xl group-hover:text-white">▶️</span>
+                    </button>
+                    <p class="mt-2 text-white text-lg font-semibold">Putar Ulang Video Pembelajaran</p>
+                </div>
+            </div>
+            <h1 class="text-5xl font-bold text-yellow-600 font-serif animate-pulse tracking-wide animate-fadeInLeft lg:ml-5">Kuis Interaktif</h1>
+        </div>
+        
+        <!-- Informasi Kuis -->
+        <div class="flex flex-col md:flex-row gap-4 mt-6">
+            <div class="bg-yellow-100 p-4 rounded-lg shadow-md border border-yellow-300 w-full md:w-3/4">
+                <h2 class="text-xl font-bold text-yellow-700 text-center">Judul Kuis: Dasar-Dasar Keuangan</h2>
+                <p class="text-gray-700 mt-2">Jumlah Soal: 6</p>
+                <p class="text-gray-700">Tingkat Kesulitan: Pemula</p>
+            </div>
+            <div class="bg-yellow-100 p-4 rounded-lg shadow-md border border-yellow-300 w-full md:w-1/4">
+                <p class="text-yellow-900 font-bold text-center">Durasi Pengerjaan</p>
+                <p class="text-gray-800 font-semibold text-center">30 Menit setelah menonton video</p>
+            </div>
+        </div>
+        
+        <form id="quiz-form" class="space-y-6 mt-6">
+            <div class="space-y-4" id="quiz-container">
+                <!-- Soal 1 -->
+                <div class="p-4 bg-gray-100 rounded-lg shadow-md border border-gray-300">
+                    <p class="font-semibold text-gray-800">1. Apa yang dimaksud dengan anggaran keuangan?</p>
+                    <div class="space-y-2 mt-2">
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q1" value="A" class="radio-option hover:bg-slate-500" required>
+                            <span>A. Rencana pengeluaran dan pemasukan</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q1" value="B" class="radio-option hover:bg-slate-500">
+                            <span>B. Catatan utang</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q1" value="C" class="radio-option hover:bg-slate-500">
+                            <span>C. Investasi jangka pendek</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q1" value="D" class="radio-option hover:bg-slate-500">
+                            <span>D. Semua jawaban benar</span>
+                        </label>
+                    </div>
+                    <button type="button" id="clear-btn-1" class="text-red-500 text-sm mt-2 hidden hover:text-red-800">Hapus Jawaban</button>
+                </div>
+
+                <!-- Soal 2 -->
+                <div class="p-4 bg-gray-100 rounded-lg shadow-md border border-gray-300">
+                    <p class="font-semibold text-gray-800">2. Apa tujuan utama dari tabungan darurat?</p>
+                    <div class="space-y-2 mt-2">
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q2" value="A" class="radio-option hover:bg-slate-500" required>
+                            <span>A. Menyimpan uang untuk liburan</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q2" value="B" class="radio-option hover:bg-slate-500">
+                            <span>B. Menghadapi keadaan darurat</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q2" value="C" class="radio-option hover:bg-slate-500">
+                            <span>C. Investasi jangka panjang</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                            <input type="radio" name="q2" value="D" class="radio-option hover:bg-slate-500">
+                            <span>D. Semua jawaban benar</span>
+                        </label>
+                    </div>
+                    <button type="button" id="clear-btn-2" class="text-red-500 text-sm mt-2 hidden hover:text-red-800">Hapus Jawaban</button>
+                </div>
+
+                <!-- Soal 3 -->
+            <div class="p-4 bg-gray-100 rounded-lg shadow-md border border-gray-300">
+                <p class="font-semibold text-gray-800">3. Apa itu investasi jangka panjang?</p>
+                <div class="space-y-2 mt-2">
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q3" value="A" class="radio-option hover:bg-slate-500" required>
+                        <span>A. Investasi yang dilakukan dalam waktu singkat</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q3" value="B" class="radio-option hover:bg-slate-500">
+                        <span>B. Investasi yang dilakukan selama lebih dari 5 tahun</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q3" value="C" class="radio-option hover:bg-slate-500">
+                        <span>C. Investasi yang tidak memiliki risiko</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q3" value="D" class="radio-option hover:bg-slate-500">
+                        <span>D. Semua jawaban benar</span>
+                    </label>
+                </div>
+                <button type="button" id="clear-btn-3" class="text-red-500 text-sm mt-2 hidden hover:text-red-800">Hapus Jawaban</button>
+            </div>
+
+            <!-- Soal 4 -->
+            <div class="p-4 bg-gray-100 rounded-lg shadow-md border border-gray-300">
+                <p class="font-semibold text-gray-800">4. Mengapa penting membuat anggaran bulanan?</p>
+                <div class="space-y-2 mt-2">
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q4" value="A" class="radio-option hover:bg-slate-500" required>
+                        <span>A. Untuk menghindari pengeluaran berlebihan</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q4" value="B" class="radio-option hover:bg-slate-500">
+                        <span>B. Untuk mengetahui pemasukan dan pengeluaran</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q4" value="C" class="radio-option hover:bg-slate-500">
+                        <span>C. Untuk mencapai tujuan keuangan</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q4" value="D" class="radio-option hover:bg-slate-500">
+                        <span>D. Semua jawaban benar</span>
+                    </label>
+                </div>
+                <button type="button" id="clear-btn-4" class="text-red-500 text-sm mt-2 hidden hover:text-red-800">Hapus Jawaban</button>
+            </div>
+
+            <!-- Soal 5 -->
+            <div class="p-4 bg-gray-100 rounded-lg shadow-md border border-gray-300">
+                <p class="font-semibold text-gray-800">5. Apa yang dimaksud dengan rasio utang terhadap pendapatan?</p>
+                <div class="space-y-2 mt-2">
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q5" value="A" class="radio-option hover:bg-slate-500" required>
+                        <span>A. Persentase utang terhadap total aset</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q5" value="B" class="radio-option hover:bg-slate-500">
+                        <span>B. Persentase utang terhadap total pendapatan</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q5" value="C" class="radio-option hover:bg-slate-500">
+                        <span>C. Total utang dibagi total pendapatan</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q5" value="D" class="radio-option hover:bg-slate-500">
+                        <span>D. Semua jawaban benar</span>
+                    </label>
+                </div>
+                <button type="button" id="clear-btn-5" class="text-red-500 text-sm mt-2 hidden hover:text-red-800">Hapus Jawaban</button>
+            </div>
+
+            <!-- Soal 6 -->
+            <div class="p-4 bg-gray-100 rounded-lg shadow-md border border-gray-300">
+                <p class="font-semibold text-gray-800">6. Bagaimana cara menghindari utang konsumtif?</p>
+                <div class="space-y-2 mt-2">
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q6" value="A" class="radio-option hover:bg-slate-500" required>
+                        <span>A. Membuat anggaran dan mematuhi rencana keuangan</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q6" value="B" class="radio-option hover:bg-slate-500">
+                        <span>B. Menggunakan kartu kredit untuk semua pembelian</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q6" value="C" class="radio-option hover:bg-slate-500">
+                        <span>C. Menghindari pengeluaran yang tidak perlu</span>
+                    </label>
+                    <label class="flex items-center space-x-2 text-gray-700 cursor-pointer">
+                        <input type="radio" name="q6" value="D" class="radio-option hover:bg-slate-500">
+                        <span>D. Mengambil pinjaman untuk memenuhi kebutuhan sehari-hari</span>
+                    </label>
+                </div>
+                <button type="button" id="clear-btn-6" class="text-red-500 text-sm mt-2 hidden hover:text-red-800">Hapus Jawaban</button>
+            </div>
+
+
+                <!-- Tambahkan soal lainnya di sini dengan cara yang sama -->
+            </div>
+            
+            <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded w-full transition-transform transform hover:scale-105">Submit</button>
+        </form>
+    </div>
+    
+    <!-- Tombol Kembali ke Atas -->
+    <button id="backToTop" class="fixed bottom-5 right-5 bg-navy-700 bg-slate-50 p-3 rounded-full shadow-lg transition-opacity z-50 hover:ring-1 hover:ring-yellow-400 hover:scale-125">🔝</button>
+    
+    <script>
+        // Sidebar Menu Toggle
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const backToTop = document.getElementById("backToTop");
+        
+        document.getElementById("menu-btn").addEventListener("click", function () {
+            sidebar.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+            backToTop.classList.add("hidden");
+        });
+        document.getElementById("close-menu").addEventListener("click", function () {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+            backToTop.classList.remove("hidden");
+        });
+        overlay.addEventListener("click", function () {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+            backToTop.classList.remove("hidden");
+        });
+        
+        // Back to Top Button
+        backToTop.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Fitur Hapus Jawaban
+        document.querySelectorAll('button[id^="clear-btn-"]').forEach(button => {
+            button.addEventListener("click", function () {
+                const questionIndex = this.id.split('-')[2];
+                document.querySelectorAll(`input[name='q${questionIndex}']`).forEach(input => {
+                    input.checked = false;
+                });
+                this.classList.add("hidden");
+            });
+        });
+
+        // Menampilkan tombol hapus jawaban saat memilih jawaban
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener("change", function () {
+                const questionIndex = this.name.replace('q', '');
+                document.getElementById(`clear-btn-${questionIndex}`).classList.remove("hidden");
+            });
+        });
+    </script>
+</body>
+</html>
